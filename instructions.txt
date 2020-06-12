@@ -1,0 +1,65 @@
+This datapack has certain 'flags' that can be set off when it detects a player is doing something suspicious.
+Currently the datapack tracks flags built for the following hacks:
+- Killaura
+- Speed Hacks / Timer
+- Fly
+- Jesus / Water Walking
+- Xray
+
+Other hacks (like highjump or step) sometimes triggers these flags as well.
+
+--Flag trigger announement:
+Whenever a certain flag is triggered, a message will be sent to all admins (or @a[tag=admin]) including the name of the player, and the confidence level.
+
+Every 40 ticks this message is sent, and the 'confidence level' included with the message is how many times the player triggered these flags since the last message.
+This 40 tick delay can be configured with the samplesize player in the acsettings scoreboard objectives, but flag thresholds may have to be adjusted. Higher sample size can give more accurate results.
+
+Thresholds are set to prevent false-positives, mostly from KillAura flags, but each hack prevention has their own threshold.
+Thresholds will prevent admins from recieving a notification if the confidence level is below the corrosponding hack's set threshold
+(For example, sometimes the speedhack flags get triggered when a player is sprinting and jumping, yielding a confidence level of about 15. To combat this, I set the threshold to 20 so notifications of speed hacks only come through if the confidence level is above that.)
+
+To see all the thresholds, check the acsettings scoreboard objective
+
+Most of the default thresholds work very well, but you can adjust them manually if you change the sample size or have problems with false-positives
+
+--Xray Prevention:
+Whenever a player mines an ore, admins will be sent a message with the ore they mined, and how many blocks the've mined since they last found that ore.
+This is helpful to find players that may be xraying
+(For example, if someone were xraying to find diamonds and you recieved a message that they've found a diamond after mining only 15 blocks since their last diamond, you can assume that they are xraying because if they were legitamately strip mining it would be a higher value)
+
+No algorithm can accurately determine if a player is xray hacking or is just lucky, so it's up to the server moderators or admins to determine and investigate given the statistics
+
+
+--Audits:
+
+Audits can show how many times a player triggered flags for the multiple hacks recorded by the anticheat
+You can audit a player by typing /tag [player] add audit
+This will send you the audit report of the player and all of the flags they triggered
+
+Audits also include an average ore to stone ratio, so you can compare it with other players to determine if they are xray hacking or not.
+
+
+
+--Final Notes:
+
+This anticheat does nothing to prevent players from hacking, it only records and notifies admins whenever the datapack thinks that the player's actions are hacking.
+
+False Positives are a thing with any algorithm, so it's not uncommon to see that a player has tripped a few flags in their audit.
+
+Here is the rate of false positives for certain flags:
+
+Fly - Occasionally has false positives, usually when a player is falling from a large distance
+Jesus - Almost impossible to have a false positive
+Killaura - Has a false positive every now and then, but most of the time it's accurate
+Speed/Timer - Very rarely has a false positive, only when a player is on ice and sprinting. The threshold is set perfectly to the point where a 1.1x speedhack is detected.
+Xray - No false positives
+
+Conclusion: False positives rarely happen, and the number of correct flags severly outweigh the false positives
+Example: I have found that after an hour of playing legitly, there were 10 false positives for killaura, but after an hour of using killaura, I found that there were 141 flags triggered.
+
+DO NOT IGNORE HIGH NUMBERS IN AUDIT REPORTS! Compare it to their playtime on the server.
+
+
+Thanks for using this!
+
+-Nick
